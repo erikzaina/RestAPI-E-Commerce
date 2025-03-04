@@ -1,5 +1,5 @@
 import express from 'express';
-
+import productsRoutes from './routes/products/index'
         
 const PORT = 3000
 const app = express();
@@ -8,6 +8,8 @@ const app = express();
 app.get('/',(req,res) => {
     res.send('Hello World')
 })
+
+app.use('/products',productsRoutes)
 
 app.listen(PORT,() => {
     console.log(`example app listening on port ${PORT}`)
