@@ -3,7 +3,8 @@ import { db } from "../../db/index"
 import { productsTable } from "../../db/productsSchema"
 import { except } from "drizzle-orm/gel-core"
 import { eq } from "drizzle-orm"
-
+import _  from 'lodash'
+import { createProductSchema } from "./index"
 
 export async function listProducts(req:Request,res:Response) {
     try {
@@ -16,7 +17,6 @@ export async function listProducts(req:Request,res:Response) {
 
 export async function getProductByID(req:Request,res:Response) {
     try {
-        // const id = parseInt(req.params.id)
         const { id } = req.params
         const [product] = await db
         .select()
@@ -36,7 +36,8 @@ export async function getProductByID(req:Request,res:Response) {
 
 export async function createProduct(req:Request,res:Response) {
     try {
-        const [product] = await db.insert(productsTable).values(req.body).returning()
+        const data = createProductSchema.parse(req.body);
+        const [product] = await db.insert(productsTable).values(data).returning()
         res.status(201).json(product)
     } catch (e)
     {
@@ -48,9 +49,10 @@ export async function createProduct(req:Request,res:Response) {
 export async function updateProductByID(req:Request,res:Response) {
     try {
         const { id } = req.params
+        const data = createProductSchema.parse(req.body);
         const [updatedProduct] = await db
             .update(productsTable)
-            .set(req.body)
+            .set(data)
             .where(eq(productsTable.id, Number(id)))
             .returning()
             
