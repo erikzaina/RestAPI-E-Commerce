@@ -4,7 +4,7 @@ import { productsTable } from "../../db/productsSchema"
 import { except } from "drizzle-orm/gel-core"
 import { eq } from "drizzle-orm"
 import _  from 'lodash'
-import { createProductSchema } from "./index"
+import { createProductSchema } from "../../db/productsSchema"
 
 export async function listProducts(req:Request,res:Response) {
     try {

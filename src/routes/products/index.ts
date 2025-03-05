@@ -1,14 +1,11 @@
 import { Router } from 'express';
 import { listProducts, getProductByID, createProduct, updateProductByID, deleteProductByID } from './controller';
 import { validateData } from '../../middlewares/validationMiddleWare';
-import {createInsertSchema} from 'drizzle-zod'
-import { productsTable } from '../../db/productsSchema';
+import { createProductSchema } from "../../db/productsSchema"
 
 
 
-export const createProductSchema = createInsertSchema(productsTable).omit(
-   {id: true as never}
-);
+
 
 
 const router = Router();
